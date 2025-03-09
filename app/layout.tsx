@@ -1,15 +1,20 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/assets/styles/globals.css';
+import {APP_NAME, APP_DESCRIPTION, SERVER_URL} from "@/lib/constants";
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Velvet',
-  description: 'A modern store built with Next.js, ShadCN, and Prisma.',
+    title: {
+        template: `%s | Velvet`,
+        default: APP_NAME,
+    },
+    description: APP_DESCRIPTION,
+    metadataBase: new URL(SERVER_URL),
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
