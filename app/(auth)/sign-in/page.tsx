@@ -1,8 +1,9 @@
-import {Metadata} from "next";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import Link from "next/link";
-import Image from "next/image";
-import {APP_NAME} from "@/lib/constants";
+import {Metadata} from 'next';
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import Link from 'next/link';
+import Image from 'next/image';
+import {APP_NAME} from '@/lib/constants';
+import CredentialsSignInForm from './credentials-signin-form';
 
 export const metadata: Metadata = {
     title: 'SignIn',
@@ -12,7 +13,7 @@ const signInPage = () => {
     return (
       <div className='w-full max-w-md mx-auto'>
         <Card>
-          <CardHeader>
+          <CardHeader className='space-y-4'>
             <Link href='/' className='flex-center'>
               <Image
                   src='/images/logo.svg'
@@ -28,7 +29,7 @@ const signInPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className='space-y-4'>
-           {/*Sign In Form*/}
+           <CredentialsSignInForm />
           </CardContent>
         </Card>
       </div>
