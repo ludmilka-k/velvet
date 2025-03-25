@@ -25,7 +25,7 @@ const AddToCart = ({item}:{item:CartItem}) => {
 
         // Handle success add to cart
         toast({
-            description:`${item.name} added to cart `,
+            description: res.message,
             action:
             <ToastAction altText='Go To Cart' onClick={() => router.push('/cart') }
                          className='bg-primary text-white hover: bg-gray-800'
