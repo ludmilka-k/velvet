@@ -8,7 +8,7 @@ CREATE TABLE "Cart" (
     "totalPrice" DECIMAL(12,2) NOT NULL,
     "shippingPrice" DECIMAL(12,2) NOT NULL,
     "taxPrice" DECIMAL(12,2) NOT NULL,
-    "createAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Cart_pkey" PRIMARY KEY ("id")
 );

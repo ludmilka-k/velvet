@@ -13,7 +13,7 @@ CREATE TABLE "Product" (
     "numReviews" INTEGER NOT NULL DEFAULT 0,
     "isFeatured" BOOLEAN NOT NULL DEFAULT false,
     "banner" TEXT,
-    "createAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
