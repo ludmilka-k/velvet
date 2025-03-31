@@ -4,19 +4,20 @@ import {getMyCart} from '@/lib/actions/cart.actions';
 import {getUserById} from '@/lib/actions/user.actions';
 import {redirect} from 'next/navigation';
 import {ShippingAddress} from '@/types';
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 import CheckoutSteps from '@/components/shared/checkout-steps';
 import {Card, CardContent} from '@/components/ui/card';
-import {Button} from "@/components/ui/button";
+import {Button} from '@/components/ui/button';
 import {
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableHeader,
-    TableRow,} from "@/components/ui/table";
-import {formatCurrency} from "@/lib/utils";
+    TableRow,} from '@/components/ui/table';
+import {formatCurrency} from '@/lib/utils';
+import PlaceOrderForm from './place-order-form';
 
 export const metadata:Metadata = {
     title: 'Place Order',
@@ -127,7 +128,7 @@ const PlaceOrderPage = async () => {
                     <h2 className='text-normal'>Total</h2>
                     <div>{formatCurrency(cart.totalPrice)}</div>
                   </div>
-                  {/* Form Here */}
+                  <PlaceOrderForm />
                 </CardContent>
               </Card>
             </div>
