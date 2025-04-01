@@ -3,7 +3,7 @@ const base = process.env.PAYPAL_API_URL || 'https://api-m.sandbox.paypal.com';
 export const paypal = {};
 
 // Generate PayPal access token
-async function generateAccessToken() {
+export async function generateAccessToken() {
     const {PAYPAL_CLIENT_ID, PAYPAL_APP_SECRET} = process.env;
     const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${ PAYPAL_APP_SECRET }`).toString('base64');
 
