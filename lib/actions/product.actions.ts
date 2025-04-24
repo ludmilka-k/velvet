@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 import { prisma } from '@/db/prisma';
 import {convertToPlainObject, formatError} from '@/lib/utils';
@@ -21,6 +22,15 @@ export async function getProductBySlug(slug: string) {
     return await prisma.product.findFirst({
         where: {slug: slug},
     });
+}
+
+// Get single product by ID
+export async function getProductById(productId: string) {
+    const data = await prisma.product.findFirst({
+        where: {id: productId},
+    });
+
+    return convertToPlainObject(data);
 }
 
 // Get all products
