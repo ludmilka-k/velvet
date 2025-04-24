@@ -5,8 +5,9 @@ import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import {hashSync} from 'bcrypt-ts-edge';
 import { prisma } from '@/db/prisma';
 import { z } from 'zod';
-import {formatError} from "@/lib/utils";
-import {ShippingAddress} from "@/types";
+import {formatError} from '@/lib/utils';
+import {ShippingAddress} from '@/types';
+import {PAGE_SIZE} from '@/lib/constants';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
@@ -150,5 +151,24 @@ export async function updateProfile(user: {name: string, email: string}) {
     } catch (error) {
       return {success: false, message: formatError(error)};
     }
+}
+
+// Get all the users
+export async function getAllUsers({limit = PAGE_SIZE, page}: {
+    limit?: number,
+    page: number,
+}) {
+    const data = await prisma.user.findMany({
+      orderBy: {createdAt: 'desc'},
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+
+    const dataCount = await prisma.user.count();
+
+    return {
+      data,
+      totalPages: Math.ceil(dataCount / limit),
+    };
 }
 
