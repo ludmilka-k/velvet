@@ -1,6 +1,6 @@
 import {Metadata} from 'next';
 import {getProductById} from '@/lib/actions/product.actions';
-import notFound from '@/app/not-found';
+import {notFound} from 'next/navigation';
 import ProductForm from '@/components/admin/product-form';
 
 export const metadata:Metadata = {
@@ -12,7 +12,7 @@ const ProductUpdatePage = async (props: {params: Promise<{id: string}> }) => {
 
     const product = await getProductById(id);
 
-    if (!product) return notFound()
+    if (!product) return notFound();
     return (
       <div className='space-y-8 max-w-5xl mx-auto'>
         <h1 className='h2-bold'>Update Product</h1>
