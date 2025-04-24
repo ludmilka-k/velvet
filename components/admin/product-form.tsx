@@ -17,6 +17,7 @@ import {createProduct, updateProduct} from '@/lib/actions/product.actions';
 import  {UploadButton} from '@/lib/uploadthing';
 import {Card, CardContent} from '@/components/ui/card';
 import Image from 'next/image';
+import {Checkbox} from '@/components/ui/checkbox';
 
 const ProductForm = ({type, product, productId}: {
     type: 'Create' | 'Update',
@@ -36,13 +37,13 @@ const ProductForm = ({type, product, productId}: {
     });
 
     // Handle form submit
-    const onSubmit:SubmitHandler<z.infer<typeof insertProductSchema>> = async(values)=> {
+    const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
       // On Create
-      if (type === "Create") {
+      if (type === 'Create') {
         const res = await createProduct(values);
 
         if (!res.success) {
-          toast ({
+          toast({
             variant: 'destructive',
             description: res.message,
           });
@@ -55,7 +56,7 @@ const ProductForm = ({type, product, productId}: {
       }
 
       // On Update
-      if (type === "Update") {
+      if (type === 'Update') {
         if (!productId) {
           router.push('/admin/products');
           return;
@@ -64,7 +65,7 @@ const ProductForm = ({type, product, productId}: {
         const res = await updateProduct({...values, id:productId});
 
         if (!res.success) {
-          toast ({
+          toast({
             variant: 'destructive',
             description: res.message,
           });
@@ -78,6 +79,8 @@ const ProductForm = ({type, product, productId}: {
     };
 
     const images = form.watch('images');
+    const isFeatured = form.watch('isFeatured');
+    const banner = form.watch('banner');
 
     return (
       <Form {...form}>
@@ -229,7 +232,52 @@ const ProductForm = ({type, product, productId}: {
               )}
             />
           </div>
-          <div className='upload-field'>{/* Is Featured */}</div>
+          <div className='upload-field'>
+            {/* Is Featured */}
+            Featured Product
+            <Card>
+              <CardContent className='space-y-2 mt-2'>
+                <FormField
+                  control={form.control}
+                  name='isFeatured'
+                  render={({field}) => (
+                    <FormItem className='space-x-2 items-center'>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Is Featured?</FormLabel>
+                    </FormItem>
+                  )}
+                />
+                {isFeatured && banner && (
+                  <Image
+                    src={banner}
+                    alt='banner image'
+                    className='w-full object-cover object-center rounded-sm'
+                    width={1920}
+                    height={680}
+                  />
+                )}
+                {isFeatured && !banner && (
+                  <UploadButton
+                    endpoint='imageUploader'
+                    onClientUploadComplete={(res: { ufsUrl: string }[]) => {
+                      form.setValue('banner', res[0].ufsUrl);
+                    }}
+                    onUploadError={(error: Error) => {
+                      toast({
+                        variant: 'destructive',
+                        description: `ERROR! ${error.message}`,
+                      });
+                    }}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
           <div>
            {/* Description */}
             <FormField
@@ -259,7 +307,7 @@ const ProductForm = ({type, product, productId}: {
           </div>
         </form>
       </Form>
-    )
+    );
 };
 
 export default ProductForm;
