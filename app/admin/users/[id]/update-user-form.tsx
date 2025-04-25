@@ -10,7 +10,8 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Input} from '@/components/ui/input';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {USER_ROLE} from '@/lib/constants';
-import {Button} from "@/components/ui/button";
+import {Button} from '@/components/ui/button';
+import {updateUser} from '@/lib/actions/user.actions';
 
 const UpdateUserForm = ({user}: {user: z.infer<typeof updateUserSchema>}) => {
     const router = useRouter();
@@ -21,9 +22,33 @@ const UpdateUserForm = ({user}: {user: z.infer<typeof updateUserSchema>}) => {
         defaultValues: user,
     });
 
-    const onSubmit = () => {
-        return;
-    }
+    const onSubmit = async (values: z.infer<typeof updateUserSchema>) => {
+      try {
+        const res =  await updateUser({
+          ...values,
+          id: user.id,
+        });
+
+        if (!res.success) {
+          return toast({
+            variant: 'destructive',
+            description:  res.message,
+          })
+        }
+
+        toast({
+            description: res.message,
+        });
+
+        form.reset();
+        router.push('/admin/users');
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          description: (error as Error).message,
+        }) ;
+      }
+    };
 
     return (
       <Form {...form}>
