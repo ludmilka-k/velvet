@@ -12,8 +12,8 @@ importers:
         specifier: 2.7.4
         version: 2.7.4(@prisma/client@6.5.0(prisma@6.5.0(typescript@5.7.3))(typescript@5.7.3))
       '@hookform/resolvers':
-        specifier: ^4.1.3
-        version: 4.1.3(react-hook-form@7.56.1(react@19.0.0))
+        specifier: ^3.9.1
+        version: 3.10.0(react-hook-form@7.56.1(react@19.0.0))
       '@neondatabase/serverless':
         specifier: ^0.10.4
         version: 0.10.4
@@ -84,7 +84,7 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       react-hook-form:
-        specifier: ^7.56.1
+        specifier: ^7.54.2
         version: 7.56.1(react@19.0.0)
       recharts:
         specifier: ^2.15.2
@@ -586,8 +586,8 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@hookform/resolvers@4.1.3':
-    resolution: {integrity: sha512-Jsv6UOWYTrEFJ/01ZrnwVXs7KDvP8XIo115i++5PWvNkNvkrsTfGiLS6w+eJ57CYtUtDQalUWovCZDHFJ8u1VQ==}
+  '@hookform/resolvers@3.10.0':
+    resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
     peerDependencies:
       react-hook-form: ^7.0.0
 
@@ -1671,9 +1671,6 @@ packages:
 
   '@standard-schema/spec@1.0.0-beta.4':
     resolution: {integrity: sha512-d3IxtzLo7P1oZ8s8YNvxzBUXRXojSut8pbPrTYtzsc5sn4+53jVqbk66pQerSZbZSJZQux6LkclB/+8IDordHg==}
-
-  '@standard-schema/utils@0.3.0':
-    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
@@ -4560,9 +4557,8 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@hookform/resolvers@4.1.3(react-hook-form@7.56.1(react@19.0.0))':
+  '@hookform/resolvers@3.10.0(react-hook-form@7.56.1(react@19.0.0))':
     dependencies:
-      '@standard-schema/utils': 0.3.0
       react-hook-form: 7.56.1(react@19.0.0)
 
   '@humanfs/core@0.19.1': {}
@@ -5638,8 +5634,6 @@ snapshots:
       '@sinonjs/commons': 3.0.1
 
   '@standard-schema/spec@1.0.0-beta.4': {}
-
-  '@standard-schema/utils@0.3.0': {}
 
   '@swc/counter@0.1.3': {}
 
