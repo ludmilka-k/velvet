@@ -54,8 +54,36 @@ export async function getAllProducts({query, limit = PAGE_SIZE, page, category, 
         }
       : {};
 
+    // Category filter
+    const categoryFilter = category && category !== 'all' ? {category} : {};
+
+    // Filter by price
+    const priceFilter: Prisma.ProductWhereInput = price && price !== 'all'
+      ? {
+        price: {
+          gte: Number(price.split('-')[0]),
+          lte: Number(price.split('-')[1]),
+          }
+        }
+      : {};
+
+    // Rating filter
+    const ratingFilter = rating && rating !== 'all'
+      ? {
+          rating: {
+            gte: Number(rating),
+          }
+        }
+      : {};
+
+    // Fetch products
     const data = await prisma.product.findMany({
-      where: {...queryFilter},
+      where: {
+        ...queryFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...ratingFilter,
+      },
       orderBy: {createdAt: 'desc'},
       skip: (page - 1) * limit,
       take : limit,
