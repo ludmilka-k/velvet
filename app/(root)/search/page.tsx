@@ -1,6 +1,6 @@
 import {getAllProducts} from '@/lib/actions/product.actions';
 import ProductCard from '@/components/shared/product/product-card';
-import Pagination from "@/components/shared/pagination";
+import Pagination from '@/components/shared/pagination';
 
 const SearchPage = async  (props: {searchParams: Promise<{
       q?: string;
@@ -19,6 +19,32 @@ const SearchPage = async  (props: {searchParams: Promise<{
       sort = 'newest',
       page = '1',
     } = await props.searchParams;
+
+    // Construct filter url
+    const getFilterUrl = ({
+      c,
+      p,
+      s,
+      r,
+      pg,
+
+    }: {
+      c?: string;
+      p?: string;
+      s?: string;
+      r?: string;
+      pg?: string;
+    }) => {
+      const params = {q, category, price, rating, sort, page};
+
+      if (c) params.category = c;
+      if (p) params.price = p;
+      if (s) params.sort = s;
+      if (r) params.rating = r;
+      if (pg) params.page = pg;
+
+      return `/search?${new URLSearchParams(params).toString()}`;
+    }
 
     // Get products
     const products = await getAllProducts({
