@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 import { prisma } from '@/db/prisma';
 import {convertToPlainObject, formatError} from '@/lib/utils';
@@ -84,7 +83,14 @@ export async function getAllProducts({query, limit = PAGE_SIZE, page, category, 
         ...priceFilter,
         ...ratingFilter,
       },
-      orderBy: {createdAt: 'desc'},
+      orderBy:
+        sort === 'lowest'
+          ? {price: 'asc'}
+          : sort === 'highest'
+          ? {price: 'desc'}
+          : sort === 'rating'
+          ? {rating: 'desc'}
+          :{createdAt: 'desc'},
       skip: (page - 1) * limit,
       take : limit,
     });
