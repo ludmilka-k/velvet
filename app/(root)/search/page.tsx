@@ -2,6 +2,7 @@ import {getAllCategories, getAllProducts} from '@/lib/actions/product.actions';
 import ProductCard from '@/components/shared/product/product-card';
 import Pagination from '@/components/shared/pagination';
 import Link from 'next/link';
+import {Button} from '@/components/ui/button';
 
 const prices = [
     {
@@ -25,6 +26,8 @@ const prices = [
         value: '501-1000'
     },
 ];
+
+const ratings = [4, 3, 2, 1];
 
 const SearchPage = async  (props: {searchParams: Promise<{
       q?: string;
@@ -111,30 +114,74 @@ const SearchPage = async  (props: {searchParams: Promise<{
           </div>
           {/*Price Links*/}
           <div className='text-xl mb-2 mt-8'>Price</div>
-            <div>
-              <ul className='space-y-1'>
-                <li>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  href={getFilterUrl({p: 'all'})}
+                  className={`${price === 'all' && 'font-bold'}`}
+                >
+                  Any
+                </Link>
+              </li>
+              {prices.map((p)  => (
+                <li key={p.value}>
                   <Link
-                    href={getFilterUrl({p: 'all'})}
-                    className={`${price === 'all' && 'font-bold'}`}
+                    href={getFilterUrl({p: p.value})}
+                    className={`${price === p.value && 'font-bold'}`}
                   >
-                    Any
+                    {p.name}
                   </Link>
                 </li>
-                {prices.map((p)  => (
-                  <li key={p.value}>
-                    <Link
-                      href={getFilterUrl({p: p.value})}
-                      className={`${price === p.value && 'font-bold'}`}
-                    >
-                      {p.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </div>
+          {/*Rating Links*/}
+          <div className='text-xl mb-2 mt-8'>Customer Rating</div>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  href={getFilterUrl({r: 'all'})}
+                  className={`${rating === 'all' && 'font-bold'}`}
+                >
+                  Any
+                </Link>
+              </li>
+              {ratings.map((r)  => (
+                <li key={r}>
+                  <Link
+                    href={getFilterUrl({r: `${r}` })}
+                    className={`${rating === r.toString() && 'font-bold'}`}
+                  >
+                    {`${r} stars & up`}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className='md:col-span-4 space-y-4'>
+          <div className='flex-between flex-col md:flex-row my-4'>
+            <div className='flex items-center'>
+              {q !== 'all' && q !== '' && 'Query: ' + q}
+              {category !== 'all' && category !== '' && ' Category: ' + category}
+              {price !== 'all' && ' Price: ' + price}
+              {rating !== 'all' && ' Rating: ' + rating + ' stars & up'}
+              &nbsp;
+              {
+                (q !== 'all' && q !== '') ||
+                (category !== 'all' && category !== '') ||
+                price !== 'all' ||
+                rating !== 'all' ? (
+                  <Button variant={'link'} asChild>
+                    <Link href='/search'>Clear</Link>
+                  </Button>
+                ) : null
+              }
+            </div>
+            <div>{/*SORT*/}</div>
+          </div>
           <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
             {products.data.length === 0 && <div>No product found</div>}
             {products.data.map(product => (
