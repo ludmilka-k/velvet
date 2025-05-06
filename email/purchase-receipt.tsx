@@ -14,10 +14,60 @@ import {
     Text,
 } from '@react-email/components';
 import {formatCurrency} from '@/lib/utils';
+import sampleData from '@/db/sample-data';
+import dotenv from 'dotenv';
+dotenv.config();
+
+PurchaseReceiptEmail.PreviewProps = {
+  order: {
+    id: crypto.randomUUID(),
+    userId: '123',
+    user: {
+      name: 'John Doe',
+      email: 'test@test.com'
+    },
+    paymentMethod: 'Stripe',
+    shippingAddress: {
+      fullName: 'John Doe',
+      streetAddress: 'Main street 10',
+      city: 'New York',
+      country: 'USA',
+      postalCode: '12345',
+    },
+    createdAt: new Date(),
+    totalPrice: '100',
+    taxPrice: '10',
+    shippingPrice: '10',
+    itemsPrice: '80',
+    orderItems: sampleData.products.map((x) => ({
+      name: x.name,
+      orderId: '123',
+      productId: '123',
+      slug: x.slug,
+      qty: x.stock,
+      image: x.images[0],
+      price: x.price.toString(),
+    })),
+    isDelivered: true,
+    deliveredAt: new Date(),
+    isPaid: true,
+    paidAt: new Date(),
+    paymentResult: {
+      id: '123',
+      status: 'succeeded',
+      pricePaid: '100',
+      email_address: 'test@test.com',
+    },
+  },
+} satisfies OrderInformationProps;
 
 const dateFormatter = new Intl.DateTimeFormat('en', {dateStyle: 'medium'});
 
-export default function PurchaseReceiptEmail ({order}: {order: Order}){
+type OrderInformationProps = {
+  order: Order;
+}
+
+export default function PurchaseReceiptEmail ({order}: OrderInformationProps){
   return(
     <Html>
       <Preview>View order receipt</Preview>
@@ -36,7 +86,7 @@ export default function PurchaseReceiptEmail ({order}: {order: Order}){
                 </Column>
                 <Column>
                   <Text className='mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap'>
-                    Purchase Date
+                    Purchased On
                   </Text>
                   <Text className='mt-0 mr-4'>{dateFormatter.format(order.createdAt)}</Text>
                 </Column>

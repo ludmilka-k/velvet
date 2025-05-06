@@ -30,7 +30,7 @@ import { useTransition } from 'react';
 import StripePayment from './stripe-payment';
 
 const OrderDetailsTable = ({order, paypalClientId, isAdmin, stripeClientSecret}: {
-    order: Order, paypalClientId: string, isAdmin: boolean, stripeClientSecret: string | null,
+    order: Omit<Order, 'paymentResult'>, paypalClientId: string, isAdmin: boolean, stripeClientSecret: string | null,
 }) => {
       const {
         shippingAddress,
