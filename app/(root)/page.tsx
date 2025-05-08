@@ -3,6 +3,7 @@ import {getLatestProducts, getFeaturedProducts} from '@/lib/actions/product.acti
 import ProductCarousel from '@/components/shared/product/product-carousel';
 import ViewAllProductsButton from '@/components/view-all-products';
 import IconBoxes from '@/components/icon-boxes';
+import DealCountdown from '@/components/deal-countdown';
 
 const HomePage = async () => {
     const latestProducts = await getLatestProducts();
@@ -15,6 +16,7 @@ const HomePage = async () => {
         )}
         <ProductList data={latestProducts} title='Newest Arrivals' limit={4} />
         <ViewAllProductsButton />
+        <DealCountdown />
         <IconBoxes />
       </>
     )
