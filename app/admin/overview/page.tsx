@@ -3,16 +3,19 @@ import {auth} from '@/auth';
 import {getOrderSummary} from '@/lib/actions/order.actions';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {BadgeDollarSign, Barcode, CreditCard, Users} from 'lucide-react';
-import {formatCurrency, formatDateTime, formatNumber} from "@/lib/utils";
+import {formatCurrency, formatDateTime, formatNumber} from '@/lib/utils';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import Link from 'next/link';
 import  Charts from './charts';
+import {requireAdmin} from '@/lib/require-admin';
 
 export const metadata:Metadata = {
     title: 'Admin Dashboard',
-}
+};
 
 const AdminOverviewPage = async () => {
+    await requireAdmin();
+
     const session = await auth();
 
     // Make sure the user is an admin

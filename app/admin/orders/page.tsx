@@ -7,14 +7,17 @@ import {Button} from '@/components/ui/button';
 import Link from 'next/link';
 import Pagination from '@/components/shared/pagination';
 import DeleteDialog from '@/components/shared/delete-dialog';
+import {requireAdmin} from '@/lib/require-admin';
 
 export const metadata:Metadata = {
     title: 'Admin Orders',
-}
+};
 
 const AdminOrdersPage = async (props:{
     searchParams: Promise<{page: string, query: string}>
 }) => {
+    await requireAdmin();
+
     const {page = '1', query: searchText} = await props.searchParams;
 
     const session = await auth();

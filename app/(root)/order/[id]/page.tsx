@@ -1,6 +1,6 @@
 import {Metadata} from 'next';
 import {getOrderById} from '@/lib/actions/order.actions';
-import {notFound} from 'next/navigation';
+import {notFound, redirect} from 'next/navigation';
 import OrderDetailsTable from './order-details-table';
 import {ShippingAddress} from '@/types';
 import {auth} from '@/auth';
@@ -20,6 +20,11 @@ const OrderDetailsPage = async (props:{
     if (!order) notFound();
 
     const session = await auth();
+
+    // Redirect the user if they don't own the order
+    if (order.userId !== session?.user?.id && session?.user.role !== 'admin') {
+      redirect('/unauthorized');
+    }
 
     let client_secret = null;
 

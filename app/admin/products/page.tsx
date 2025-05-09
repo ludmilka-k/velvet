@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import Pagination from '@/components/shared/pagination';
 import DeleteDialog from '@/components/shared/delete-dialog';
+import {requireAdmin} from '@/lib/require-admin';
 
 export const metadata:Metadata = {
     title: 'Admin Products',
@@ -17,6 +18,8 @@ const AdminProductsPage = async (props: { searchParams: Promise<{
       category:  string,
     }>
 }) => {
+    await requireAdmin();
+
     const searchParams = await props.searchParams;
     const page = Number(searchParams.page) || 1;
     const searchText = searchParams.query || '';
