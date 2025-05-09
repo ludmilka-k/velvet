@@ -16,14 +16,15 @@ import {ShippingAddress} from '@/types';
 import {PAGE_SIZE} from '@/lib/constants';
 import {revalidatePath} from 'next/cache';
 import { Prisma } from '@prisma/client';
+import {getMyCart} from '@/lib/actions/cart.actions';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
     try {
       // Set user from form and validate it with Zod schema
       const user = signInFormSchema.parse({
-          email: formData.get('email'),
-          password: formData.get('password'),
+        email: formData.get('email'),
+        password: formData.get('password'),
       });
 
       await signIn('credentials', user);
@@ -40,6 +41,14 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
 
 // Sign user out
 export async function signOutUser() {
+    // Get current users cart and delete it so it does not persist to next user
+    const currentCart = await getMyCart();
+
+    if (currentCart?.id) {
+    await prisma.cart.delete({where: {id: currentCart.id} });
+    } else {
+      console.warn('No cart found for deletion.');
+    }
     await signOut();
 }
 
@@ -94,8 +103,8 @@ export async function updateUserAddress (data: ShippingAddress) {
       const session = await auth();
 
       const currentUser = await prisma.user.findFirst({
-          where: {id: session?.user?.id}
-      })
+          where: {id: session?.user?.id},
+      });
 
       if (!currentUser) throw new Error('User not found');
 
@@ -117,7 +126,7 @@ export async function updateUserPaymentMethod (data: z.infer<typeof paymentMetho
     try {
       const session = await auth();
       const currentUser = await prisma.user.findFirst({
-          where: {id: session?.user?.id}
+          where: {id: session?.user?.id},
       });
 
       if (!currentUser) throw new Error('User not found');
@@ -132,7 +141,7 @@ export async function updateUserPaymentMethod (data: z.infer<typeof paymentMetho
       return {
           success: true,
           message: 'User updated successfully',
-      }
+      };
     } catch (error) {
       return {success: false, message: formatError(error)};
     }
@@ -143,7 +152,7 @@ export async function updateProfile(user: {name: string, email: string}) {
     try {
       const session = await auth();
       const currentUser = await prisma.user.findFirst({
-        where: {id: session?.user?.id}
+        where: {id: session?.user?.id},
       });
 
       if (!currentUser) throw new Error('User not found');
@@ -205,7 +214,7 @@ export async function deleteUser(id: string) {
     } catch (error) {
       return {
         success: false, message: formatError(error),
-      }
+      };
     }
 }
 
