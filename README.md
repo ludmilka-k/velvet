@@ -5,7 +5,7 @@
 > Your go-to fashion marketplace for timeless elegance and modern trends.
 > Fashion at your fingertips.
 
-<code><img src="#" /></code>
+<code><img src="/public/images/screen.jpeg" alt="Next.js Ecommerce" /></code>
 
 ## Table of Contents
 
